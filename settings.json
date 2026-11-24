@@ -186,5 +186,6 @@
   ],
   "logo": "ink",
   "lh": 30,
-  "hlf": "ui"
+  "hlf": "ui",
+  "theme": "light"
 }

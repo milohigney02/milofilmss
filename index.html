@@ -260,6 +260,9 @@ body[data-view=studio]:not(.st-low) .logo{background:#fff}
       <input type="text" id="hex" aria-label="Hex colour" maxlength="7" spellcheck="false">
     </div>
   </section>
+  <section><h4>Theme</h4>
+    <div class="seg" id="thseg"><button data-th="light">Light</button><button data-th="dark">Dark</button><button data-th="auto">Follow device</button></div>
+  </section>
   <section><h4>Logo</h4>
     <div class="seg" id="lseg" style="margin-bottom:10px"><button data-l="ink">Logo original</button><button data-l="accent">Logo accent</button></div>
     <label>Logo size <input type="range" id="r-lh" min="16" max="64" step="1"></label>
@@ -313,7 +316,7 @@ body[data-view=studio]:not(.st-low) .logo{background:#fff}
 {
 const KEY='milofilmss-site-v1';
 const hsh=t=>{let h=5381;for(const c of String(t))h=((h<<5)+h+c.charCodeAt(0))>>>0;return h.toString(36);};
-const DEF={passHash:hsh('paddington'),hlf:'ui',logo:'ink',lh:30,accent:'#0A1FB4',type:'a',grain:.25,mw:44,tw:9,blur:1,side:13,hs:120,els:{sel:true,marks:true,wire:true,swiss:true},text:{},cur:0,
+const DEF={passHash:hsh('paddington'),theme:'light',hlf:'ui',logo:'ink',lh:30,accent:'#0A1FB4',type:'a',grain:.25,mw:44,tw:9,blur:1,side:13,hs:120,els:{sel:true,marks:true,wire:true,swiss:true},text:{},cur:0,
  projects:[
   {t:'Cyber.rave at The Triffid',y:'2026',r:'Multicam DoP & edit',c:'cyber.rave',s:'night',p:['#0b0b16','#2a0f3a','#ff3b6b']},
   {t:'Knockdown rebuild',y:'2026',r:'Documentary series',c:'Stroud Homes',s:'land',p:['#c9c3b6','#8f8778','#3b352c']},
@@ -378,6 +381,8 @@ document.querySelectorAll('.wb').forEach(w=>{w.innerHTML='<b></b>'.repeat(8);});
 /* apply settings */
 function apply(){
   R.style.setProperty('--accent',S.accent);R.style.setProperty('--grain',S.grain);R.style.setProperty('--side',S.side+'px');R.style.setProperty('--hs',S.hs+'px');
+  if(S.theme==='auto')delete R.dataset.theme;else R.dataset.theme=S.theme;
+  $$('#thseg button').forEach(b=>b.classList.toggle('on',b.dataset.th===S.theme));
   B.dataset.type=S.type;B.classList.toggle('hlf-bold',S.hlf==='bold');B.classList.toggle('hlf-swiss',S.hlf==='swiss');
   $$('#hseg button').forEach(b=>b.classList.toggle('on',b.dataset.h===S.hlf));R.style.setProperty('--lh',S.lh+'px');B.classList.toggle('logo-accent',S.logo==='accent');
   $$('#lseg button').forEach(b=>b.classList.toggle('on',b.dataset.l===S.logo));
@@ -511,6 +516,7 @@ $('#r-val').oninput=e=>{const [h,sv]=hex2hsv(S.accent);S.accent=hsv2hex(h,sv,+e.
   const sat=Math.min(1,Math.hypot(x,y)/R),h=(Math.atan2(y,x)*180/Math.PI+360)%360;S.accent=hsv2hex(h,sat,WV);apply();save();};
  wl.addEventListener('pointerdown',e=>{e.preventDefault();wl.setPointerCapture(e.pointerId);pick(e);const mv=ev=>pick(ev),up=()=>{wl.removeEventListener('pointermove',mv);wl.removeEventListener('pointerup',up);};wl.addEventListener('pointermove',mv);wl.addEventListener('pointerup',up);});}
 $$('#tseg button').forEach(b=>b.onclick=()=>{S.type=b.dataset.t;apply();save();});
+$$('#thseg button').forEach(b=>b.onclick=()=>{S.theme=b.dataset.th;apply();save();});
 $$('#hseg button').forEach(b=>b.onclick=()=>{S.hlf=b.dataset.h;apply();layout();save();});
 $$('#lseg button').forEach(b=>b.onclick=()=>{S.logo=b.dataset.l;apply();save();});
 ['grain','mw','tw','blur','side','hs','lh'].forEach(k=>$('#r-'+k).oninput=e=>{S[k]=+e.target.value;apply();save();});
