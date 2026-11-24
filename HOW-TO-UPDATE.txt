@@ -1,0 +1,13 @@
+HOW TO UPDATE THE LIVE SITE
+
+1. Go to yoursite.com/?edit and enter your passphrase.
+2. Change whatever you want. It saves as a draft in your browser only.
+3. Edit panel > Publish > Export settings.json > Copy.
+4. On github.com, open your repo > settings.json > pencil icon (Edit).
+5. Select all, paste, click "Commit changes".
+6. Vercel redeploys on its own. Live in about a minute.
+
+New clips: upload them to the media folder on GitHub first
+(Add file > Upload files), then point the project at them in edit mode.
+
+Default passphrase: paddington  (change it in the edit panel, then publish)
