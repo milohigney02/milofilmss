@@ -33,7 +33,9 @@ button,input,select,textarea{font:inherit;color:inherit;text-transform:none;lett
 /* frame chrome */
 .chrome{position:fixed;z-index:40;display:flex;gap:14px;align-items:baseline;padding:16px}
 .tl{top:0;left:0}.tr{top:0;right:0}.bl{bottom:0;left:0}.br{bottom:0;right:0}
-.nav a{position:relative}.nav a.on{text-decoration:underline;text-underline-offset:3px}
+.nav a{position:relative}
+.logo{position:fixed;top:11px;left:50%;transform:translateX(-50%);z-index:41;height:var(--lh,30px);aspect-ratio:287/320;background:var(--ink);-webkit-mask:url(logo.png) center/contain no-repeat;mask:url(logo.png) center/contain no-repeat;transition:background .3s}
+.logo-accent .logo{background:var(--accent)}.nav a.on{text-decoration:underline;text-underline-offset:3px}
 .meta{position:fixed;z-index:40;font-size:max(10px,.78em);color:var(--mute);top:42px}
 .meta.l{left:16px}.meta.r{right:16px;text-align:right}
 .cross{position:fixed;z-index:40;width:13px;height:13px;color:var(--ink)}
@@ -83,7 +85,7 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .ca.a::after{top:-6px}.ca.b::after{bottom:-6px}
 .no-sel .hl{background:none;padding:0}.no-sel .ca{display:none}
 /* swiss reverse block */
-.rev{background:var(--ink);color:var(--bg);padding:0 .08em}
+.rev{background:var(--accent);color:#fff;padding:0 .08em;transition:background .3s}
 .no-swiss .rev{background:none;color:inherit;padding:0}
 /* wireframe selection box */
 .wire{position:relative;display:inline-block;padding:.06em .14em}
@@ -164,6 +166,7 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
   .row{grid-template-columns:2.6em minmax(0,1fr) 3.4em}.row>:nth-child(3),.row>:nth-child(4){display:none}
   #panel{left:8px;right:8px;width:auto;top:auto;bottom:56px;max-height:55vh}
   .tl{gap:10px}
+  .logo{height:min(var(--lh,30px),22px);top:13px}
   .sq.s1,.sq.s4{display:none!important}
   .chrome{align-items:center}
 }
@@ -178,6 +181,7 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
   <a href="#work" data-v="work" data-k="nav2">Work</a>
   <a href="#studio" data-v="studio" data-k="nav3">Studio</a>
 </nav>
+<a href="#work" class="logo" aria-label="milofilmss, back to work"></a>
 <div class="chrome tr"><a href="mailto:hello@milofilmss.com" id="mail" data-k="email">hello@milofilmss.com</a></div>
 <div class="chrome bl"><span data-k="credit">Crafted by milofilmss</span></div>
 <div class="chrome br"><a href="https://www.instagram.com/milofilmss/" data-k="ig">Instagram</a><a href="#" data-k="vimeo">Vimeo</a><button class="editbtn" id="editbtn" aria-pressed="false">Edit</button></div>
@@ -238,6 +242,10 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
       <input type="text" id="hex" aria-label="Hex colour" maxlength="7" spellcheck="false">
     </div>
   </section>
+  <section><h4>Logo</h4>
+    <div class="seg" id="lseg" style="margin-bottom:10px"><button data-l="ink">Logo original</button><button data-l="accent">Logo accent</button></div>
+    <label>Logo size <input type="range" id="r-lh" min="16" max="64" step="1"></label>
+  </section>
   <section><h4>Typography</h4>
     <div class="seg" id="tseg"><button data-t="a">Studio (Geist Mono)</button><button data-t="b">Swiss (grotesk)</button></div>
   </section>
@@ -284,7 +292,7 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 {
 const KEY='milofilmss-site-v1';
 const hsh=t=>{let h=5381;for(const c of String(t))h=((h<<5)+h+c.charCodeAt(0))>>>0;return h.toString(36);};
-const DEF={passHash:hsh('paddington'),accent:'#0A1FB4',type:'a',grain:.25,mw:44,tw:9,blur:1,side:13,hs:120,els:{sel:true,marks:true,wire:true,swiss:true},text:{},cur:0,
+const DEF={passHash:hsh('paddington'),logo:'ink',lh:30,accent:'#0A1FB4',type:'a',grain:.25,mw:44,tw:9,blur:1,side:13,hs:120,els:{sel:true,marks:true,wire:true,swiss:true},text:{},cur:0,
  projects:[
   {t:'Cyber.rave at The Triffid',y:'2026',r:'Multicam DoP & edit',c:'cyber.rave',s:'night',p:['#0b0b16','#2a0f3a','#ff3b6b']},
   {t:'Knockdown rebuild',y:'2026',r:'Documentary series',c:'Stroud Homes',s:'land',p:['#c9c3b6','#8f8778','#3b352c']},
@@ -349,11 +357,12 @@ document.querySelectorAll('.wb').forEach(w=>{w.innerHTML='<b></b>'.repeat(8);});
 /* apply settings */
 function apply(){
   R.style.setProperty('--accent',S.accent);R.style.setProperty('--grain',S.grain);R.style.setProperty('--side',S.side+'px');R.style.setProperty('--hs',S.hs+'px');
-  B.dataset.type=S.type;
+  B.dataset.type=S.type;R.style.setProperty('--lh',S.lh+'px');B.classList.toggle('logo-accent',S.logo==='accent');
+  $$('#lseg button').forEach(b=>b.classList.toggle('on',b.dataset.l===S.logo));
   for(const k in S.els)B.classList.toggle('no-'+k,!S.els[k]);
   $$('#sw button').forEach(b=>b.classList.toggle('on',b.dataset.c.toLowerCase()===S.accent.toLowerCase()));if(document.activeElement!==$('#hex'))$('#hex').value=S.accent.toUpperCase();syncWheel();
   $$('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===S.type));
-  ['grain','mw','tw','blur','side','hs'].forEach(k=>$('#r-'+k).value=S[k]);
+  ['grain','mw','tw','blur','side','hs','lh'].forEach(k=>$('#r-'+k).value=S[k]);
   $$('[data-el]').forEach(c=>c.checked=!!S.els[c.dataset.el]);
   layout();
 }
@@ -472,7 +481,8 @@ $('#r-val').oninput=e=>{const [h,sv]=hex2hsv(S.accent);S.accent=hsv2hex(h,sv,+e.
   const sat=Math.min(1,Math.hypot(x,y)/R),h=(Math.atan2(y,x)*180/Math.PI+360)%360;S.accent=hsv2hex(h,sat,WV);apply();save();};
  wl.addEventListener('pointerdown',e=>{e.preventDefault();wl.setPointerCapture(e.pointerId);pick(e);const mv=ev=>pick(ev),up=()=>{wl.removeEventListener('pointermove',mv);wl.removeEventListener('pointerup',up);};wl.addEventListener('pointermove',mv);wl.addEventListener('pointerup',up);});}
 $$('#tseg button').forEach(b=>b.onclick=()=>{S.type=b.dataset.t;apply();save();});
-['grain','mw','tw','blur','side','hs'].forEach(k=>$('#r-'+k).oninput=e=>{S[k]=+e.target.value;apply();save();});
+$$('#lseg button').forEach(b=>b.onclick=()=>{S.logo=b.dataset.l;apply();save();});
+['grain','mw','tw','blur','side','hs','lh'].forEach(k=>$('#r-'+k).oninput=e=>{S[k]=+e.target.value;apply();save();});
 $$('[data-el]').forEach(c=>c.onchange=()=>{S.els[c.dataset.el]=c.checked;apply();save();});
 $('#pc').oninput=e=>{S.projects[Math.round(tgt)].c=e.target.value;rows();save();};
 $('#pu').oninput=e=>{S.projects[Math.round(tgt)].url=e.target.value.trim();save();};
