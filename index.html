@@ -75,11 +75,10 @@ body[data-type=b] .side .k{font-style:italic}
 body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .side.fade{opacity:0}
 /* iOS selection highlight */
-.hl{background:color-mix(in srgb,var(--accent) 7%,transparent);padding:.14em .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.ca{display:inline-block;position:relative;opacity:.48;width:2px;height:1.32em;vertical-align:-.3em;background:var(--accent);border-radius:1px;margin:0 -1px}
-.ca::after{content:"";position:absolute;left:50%;width:8px;height:8px;border-radius:50%;background:var(--accent);transform:translateX(-50%)}
-.ca.a::after{top:-6px}.ca.b::after{bottom:-6px}
-.no-sel .hl{background:none;padding:0}.no-sel .ca{display:none}
+.sel{position:relative;display:inline-block;max-width:100%}
+.hl{display:block;background:var(--accent);color:#fff;padding:.32em .5em .3em;line-height:1.25;transition:background .3s}
+.sel .cq{width:5px;height:5px;top:-6px;background:var(--ink)}.sel .cq.a{left:-6px}.sel .cq.b{right:-6px}
+.no-sel .hl{background:none;color:inherit;padding:0}.no-sel .sel .cq{display:none}
 /* swiss reverse block */
 .rev{background:var(--accent);color:#fff;padding:0 .08em;transition:background .3s}
 .no-swiss .rev{background:none;color:inherit;padding:0}
@@ -208,7 +207,7 @@ body[data-view=studio]:not(.st-low) .logo{background:#fff}
 <main id="work" class="view" aria-label="Work">
   <div id="dial"></div>
   <div class="frame" id="frame"><b class="fq a"></b><b class="fq b"></b><span class="rzh" data-rz="mw"></span></div>
-  <div class="side l" id="sl"><span class="k" id="cnt">01/12</span><span class="v"><span class="sel"><i class="ca a"></i>&#8288;<span class="hl" data-p="t" id="pt"></span>&#8288;<i class="ca b"></i></span></span></div>
+  <div class="side l" id="sl"><span class="k" id="cnt">01/12</span><span class="v"><span class="sel"><i class="cq a"></i><i class="cq b"></i><span class="hl" data-p="t" id="pt"></span></span></span></div>
   <div class="side r" id="sr"><span class="wire"><span class="k" data-p="y" id="py"></span><span class="v" data-p="r" id="pr"></span><span class="wb"></span></span><span class="rzh" data-rz="side"></span></div>
 </main>
 
@@ -274,7 +273,7 @@ body[data-view=studio]:not(.st-low) .logo{background:#fff}
     <label>Studio title <input type="range" id="r-hs" min="48" max="220" step="2"></label>
   </section>
   <section><h4>Graphic elements</h4>
-    <label>iOS highlight <input type="checkbox" data-el="sel"></label>
+    <label>Block highlight <input type="checkbox" data-el="sel"></label>
     <label>( n ) markers + squares <input type="checkbox" data-el="marks"></label>
     <label>Wireframe box <input type="checkbox" data-el="wire"></label>
     <label>Swiss details <input type="checkbox" data-el="swiss"></label>
