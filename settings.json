@@ -50,138 +50,19 @@
       "full": "media/01-full.mp4"
     },
     {
-      "t": "Esdeekid live",
-      "y": "2025",
-      "r": "Live stills",
-      "c": "Esdeekid",
+      "t": "BOXRAW",
+      "y": "2026",
+      "r": "Brand film, DoP",
+      "c": "BOXRAW",
       "s": "night",
       "p": [
         "#0b0b0b",
         "#222",
         "#888"
       ],
-      "img": "media/02.jpg"
-    },
-    {
-      "t": "Night shift",
-      "y": "2025",
-      "r": "Event stills",
-      "c": "Self initiated",
-      "s": "night",
-      "p": [
-        "#0b0b0b",
-        "#222",
-        "#888"
-      ],
-      "img": "media/03.jpg"
-    },
-    {
-      "t": "Cyber.rave at The Triffid",
-      "y": "2026",
-      "r": "Multicam DoP & edit",
-      "c": "cyber.rave",
-      "s": "night",
-      "p": [
-        "#0b0b16",
-        "#2a0f3a",
-        "#ff3b6b"
-      ]
-    },
-    {
-      "t": "Knockdown rebuild",
-      "y": "2026",
-      "r": "Documentary series",
-      "c": "Stroud Homes",
-      "s": "land",
-      "p": [
-        "#c9c3b6",
-        "#8f8778",
-        "#3b352c"
-      ]
-    },
-    {
-      "t": "Cinematic postcards",
-      "y": "2025",
-      "r": "DoP & colour",
-      "c": "Upstream LCD",
-      "s": "land",
-      "p": [
-        "#e7c9a0",
-        "#c48a5a",
-        "#2f2a26"
-      ]
-    },
-    {
-      "t": "Low tide, Paddington",
-      "y": "2025",
-      "r": "Personal film",
-      "c": "Self initiated",
-      "s": "room",
-      "p": [
-        "#3a3f44",
-        "#9aa3a8",
-        "#e9e2d3"
-      ]
-    },
-    {
-      "t": "First light",
-      "y": "2025",
-      "r": "Wedding film",
-      "c": "Private client",
-      "s": "land",
-      "p": [
-        "#f1d9c4",
-        "#d79a7a",
-        "#4a3a34"
-      ]
-    },
-    {
-      "t": "Back to back",
-      "y": "2026",
-      "r": "Live event",
-      "c": "Sample promoter",
-      "s": "night",
-      "p": [
-        "#120a06",
-        "#3d1d0b",
-        "#ffb347"
-      ]
-    },
-    {
-      "t": "The founder",
-      "y": "2026",
-      "r": "Personal brand",
-      "c": "Sample client",
-      "s": "room",
-      "p": [
-        "#2b2622",
-        "#7a6b5d",
-        "#efe6d8"
-      ]
-    },
-    {
-      "t": "Concrete garden",
-      "y": "2025",
-      "r": "Spec commercial",
-      "c": "Self initiated",
-      "s": "land",
-      "p": [
-        "#a9ad9c",
-        "#6e7562",
-        "#2c2f27"
-      ]
-    },
-    {
-      "t": "Showreel 2026",
-      "y": "2026",
-      "r": "DoP reel",
-      "c": "milofilmss",
-      "s": "night",
-      "p": [
-        "#0a0a0a",
-        "#262626",
-        "#f0f0f0"
-      ]
+      "video": "media/boxraw.mp4",
+      "img": "media/boxraw.jpg",
+      "full": "media/boxraw.mp4"
     }
   ],
   "logo": "ink",
