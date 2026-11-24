@@ -60,7 +60,7 @@ body[data-view=work] #work,body[data-view=index] #index,body[data-view=studio] #
 .it video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .it.act .img.kb{animation:kb 14s ease-in-out infinite alternate}
 @keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.1) translate(-1.5%,1%)}}
-.n{position:absolute;left:-2px;top:-17px;font:10px/1 "Geist Mono",monospace;letter-spacing:.06em;color:var(--acc-t);white-space:nowrap;text-transform:none;transition:opacity .2s}
+.n{position:absolute;left:-2px;top:-17px;font:10px/1 "Geist Mono",monospace;letter-spacing:.06em;color:var(--ink);white-space:nowrap;text-transform:none;transition:opacity .2s}
 .frame{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:calc(var(--W) + 18px);height:calc(var(--H) + 18px);pointer-events:none;z-index:20;will-change:transform,width,height}
 .frame i{display:none;position:absolute;width:15px;height:15px;border:0 solid var(--ink)}
 .frame i:nth-child(1){top:0;left:0;border-top-width:1.2px;border-left-width:1.2px}
@@ -75,8 +75,8 @@ body[data-type=b] .side .k{font-style:italic}
 body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .side.fade{opacity:0}
 /* iOS selection highlight */
-.hl{background:color-mix(in srgb,var(--accent) 9%,transparent);padding:.14em .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.ca{display:inline-block;position:relative;opacity:.6;width:2px;height:1.32em;vertical-align:-.3em;background:var(--accent);border-radius:1px;margin:0 -1px}
+.hl{background:color-mix(in srgb,var(--accent) 7%,transparent);padding:.14em .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ca{display:inline-block;position:relative;opacity:.48;width:2px;height:1.32em;vertical-align:-.3em;background:var(--accent);border-radius:1px;margin:0 -1px}
 .ca::after{content:"";position:absolute;left:50%;width:8px;height:8px;border-radius:50%;background:var(--accent);transform:translateX(-50%)}
 .ca.a::after{top:-6px}.ca.b::after{bottom:-6px}
 .no-sel .hl{background:none;padding:0}.no-sel .ca{display:none}
@@ -85,7 +85,7 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .no-swiss .rev{background:none;color:inherit;padding:0}
 /* wireframe selection box */
 .wire{position:relative;display:inline-block;padding:.06em .14em}
-.wire>.wb{position:absolute;inset:0;border:1px solid var(--accent);pointer-events:none;opacity:.5}
+.wire>.wb{position:absolute;inset:0;border:1px solid var(--accent);pointer-events:none;opacity:.2}
 .wb b{position:absolute;width:9px;height:9px;background:var(--bg);border:1px solid var(--accent);transform:translate(-50%,-50%)}
 .wb b:nth-child(1){left:0;top:0}.wb b:nth-child(2){left:50%;top:0}.wb b:nth-child(3){left:100%;top:0}.wb b:nth-child(4){left:100%;top:50%}
 .wb b:nth-child(5){left:100%;top:100%}.wb b:nth-child(6){left:50%;top:100%}.wb b:nth-child(7){left:0;top:100%}.wb b:nth-child(8){left:0;top:50%}
@@ -102,13 +102,33 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .row .m{color:var(--mute)}.row>:last-child{text-align:right}
 .row:hover .ti,.row:focus-visible .ti{color:var(--acc-t)}
 #peek{position:fixed;width:240px;aspect-ratio:16/9;background:#777 center/cover;pointer-events:none;z-index:30;opacity:0;transition:opacity .15s;transform:translate(18px,-50%)}
+/* frame marks + dots */
+.fq{position:absolute;top:0;width:8px;height:8px;background:var(--accent);transition:background .3s}.fq.a{left:0}.fq.b{right:0}
+.no-marks .fq{display:none}
+.dots{position:relative;padding:4px 7px;margin:-4px -7px}
+.dots>i{position:absolute;width:3px;height:3px;background:currentColor}
+.dots>i:nth-of-type(1){left:0;top:0}.dots>i:nth-of-type(2){right:0;top:0}.dots>i:nth-of-type(3){left:0;bottom:0}.dots>i:nth-of-type(4){right:0;bottom:0}
+.no-swiss .dots>i{display:none}
 /* studio view */
-#studio .wrap{position:absolute;inset:96px max(5vw,16px) 64px;overflow:auto;z-index:10;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);align-content:start}
-.hs{font:500 var(--hs)/.92 var(--disp);letter-spacing:-.055em;text-transform:none;margin:.18em 0 .3em;white-space:nowrap}
-.sub{font:500 clamp(22px,2.6vw,38px)/1.02 var(--disp);letter-spacing:-.04em;text-transform:lowercase;margin:0 0 6px}
-.sub em{font-style:italic;font-weight:500}
-.shot{aspect-ratio:4/5;max-width:300px;margin-top:28px;background:color-mix(in srgb,var(--ink) 10%,transparent) center/cover;display:grid;place-items:center;color:var(--mute);position:relative}
-.blk{margin:0 0 28px}.blk .k{color:var(--mute);display:block;margin-bottom:8px}
+#studio .wrap{position:absolute;inset:0;overflow:auto;z-index:10}
+.yin,.yang{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);padding-inline:max(5vw,16px)}
+.yin{min-height:56vh;padding-top:128px;padding-bottom:clamp(40px,6vw,72px);align-items:end;color:#fff;background:url(paper.jpg) 0 0/400px,var(--accent);background-blend-mode:hard-light;transition:background-color .3s}
+.yang{padding-top:clamp(44px,6vw,80px);padding-bottom:110px;background-image:radial-gradient(color-mix(in srgb,var(--ink) 24%,transparent) 1.1px,transparent 1.6px);background-size:26px 26px;background-position:13px 13px}
+.sh{position:relative;font:500 var(--hs)/.92 var(--disp);letter-spacing:-.05em;text-transform:none;margin:0}
+.blkw{position:relative;display:inline-block;padding:.03em .09em .07em;line-height:.92;margin-bottom:.06em}
+.blkw.lt{background:#F1F0ED;color:#111}
+.blkw.ac{background:var(--accent);color:#fff;transition:background .3s}
+.cq{position:absolute;top:-.13em;width:.12em;height:.12em;background:#111}.cq.a{left:-.12em}.cq.b{right:-.12em}
+.arr{display:inline-block;width:.62em;height:.5em;vertical-align:.02em;margin-left:.08em}
+.yin .blk .k{color:rgba(255,255,255,.72)}.yin .bio{color:#fff}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px;align-content:end}
+.blk{margin:0}.blk .k{color:var(--mute);display:block;margin-bottom:10px}
+.blk li{list-style:none;position:relative;padding-left:16px}.blk ul{margin:0;padding:0}
+.blk li::before{content:"";position:absolute;left:0;top:.45em;width:6px;height:6px;background:var(--accent)}
+.shot{grid-column:1/-1;aspect-ratio:16/9;max-width:340px;background:color-mix(in srgb,var(--ink) 9%,transparent) center/cover;display:grid;place-items:center;color:var(--mute)}
+body[data-view=studio]:not(.st-low) .tl,body[data-view=studio]:not(.st-low) .tr,body[data-view=studio]:not(.st-low) .c1,body[data-view=studio]:not(.st-low) .c2{color:#fff}
+body[data-view=studio]:not(.st-low) .meta{color:rgba(255,255,255,.7)}
+body[data-view=studio]:not(.st-low) .logo{background:#fff}
 .bio{font:400 17px/1.5 var(--disp);text-transform:none;letter-spacing:-.01em;max-width:46ch;margin:0}
 /* overlay */
 #ov{position:fixed;inset:0;z-index:80;background:color-mix(in srgb,var(--bg) 94%,transparent);display:none;place-items:center}
@@ -157,8 +177,8 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
   .side.r{left:auto;right:7vw;top:calc(50% + var(--H)/2 + 18px);text-align:right}
   .side .k{display:inline;margin:0 8px 0 0}
   .c1,.c2{top:64px}
-  #index .wrap,#studio .wrap{inset:76px 16px 56px}
-  #studio .wrap{grid-template-columns:minmax(0,1fr)}
+  #index .wrap{inset:76px 16px 56px}
+  .yin,.yang{grid-template-columns:minmax(0,1fr)}.yin{padding-top:96px}.sh{font-size:min(var(--hs),15vw)}
   .row{grid-template-columns:2.6em minmax(0,1fr) 3.4em}.row>:nth-child(3),.row>:nth-child(4){display:none}
   #panel{left:8px;right:8px;width:auto;top:auto;bottom:56px;max-height:55vh}
   .tl{gap:10px}
@@ -178,17 +198,16 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
   <a href="#studio" data-v="studio" data-k="nav3">Studio</a>
 </nav>
 <a href="#work" class="logo" aria-label="milofilmss, back to work"></a>
-<div class="chrome tr"><a href="mailto:hello@milofilmss.com" id="mail" data-k="email">hello@milofilmss.com</a></div>
-<div class="chrome bl"><span data-k="credit">Crafted by milofilmss</span></div>
+<div class="chrome tr"><span class="dots"><a href="mailto:hello@milofilmss.com" id="mail" data-k="email">hello@milofilmss.com</a><i></i><i></i><i></i><i></i></span></div>
+<div class="chrome bl"><span class="dots"><span data-k="credit">Crafted by milofilmss</span><i></i><i></i><i></i><i></i></span></div>
 <div class="chrome br"><a href="https://www.instagram.com/milofilmss/" data-k="ig">Instagram</a><a href="#" data-k="vimeo">Vimeo</a><button class="editbtn" id="editbtn" aria-pressed="false">Edit</button></div>
 <div class="meta l"><span data-k="loc">Brisbane, AU</span> &nbsp;<span id="clock">--:--</span></div>
 <div class="meta r"><span data-k="handle">@milofilmss</span> &nbsp;<span id="date"></span></div>
 <i class="cross c1"></i><i class="cross c2"></i><i class="cross c3"></i><i class="cross c4"></i>
-<i class="sq s1" style="left:11%;top:31%"></i><i class="sq" style="left:84%;top:19%"></i><i class="sq" style="left:73%;top:74%"></i><i class="sq s4" style="left:21%;top:81%"></i>
 
 <main id="work" class="view" aria-label="Work">
   <div id="dial"></div>
-  <div class="frame" id="frame"><i></i><i></i><i></i><i></i><span class="rzh" data-rz="mw"></span></div>
+  <div class="frame" id="frame"><b class="fq a"></b><b class="fq b"></b><span class="rzh" data-rz="mw"></span></div>
   <div class="side l" id="sl"><span class="k" id="cnt">01/12</span><span class="v"><span class="sel"><i class="ca a"></i>&#8288;<span class="hl" data-p="t" id="pt"></span>&#8288;<i class="ca b"></i></span></span></div>
   <div class="side r" id="sr"><span class="wire"><span class="k" data-p="y" id="py"></span><span class="v" data-p="r" id="pr"></span><span class="wb"></span></span><span class="rzh" data-rz="side"></span></div>
 </main>
@@ -203,16 +222,17 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 
 <section id="studio" class="view" aria-label="Studio">
   <div class="wrap">
-    <div>
-      <h1 class="hs"><span class="wire"><span data-k="name">milofilmss</span><span class="wb"></span><span class="rzh" data-rz="hs"></span></span></h1>
-      <p class="sub"><span data-k="role1">director of</span> <span class="rev" data-k="role2">photography</span></p>
-      <p class="sub"><em data-k="role3">brisbane, australia</em></p>
-      <div class="shot" id="shot"><span data-k="shot">( headshot )</span></div>
-    </div>
-    <div>
+    <div class="yin">
+      <h1 class="sh"><span class="blkw lt"><i class="cq a"></i><i class="cq b"></i><span data-k="st1">Director</span></span><br><span data-k="st2">of</span><br><span data-k="st3">photography.</span><span class="rzh" data-rz="hs"></span></h1>
       <div class="blk"><span class="k">( 1 ) <span data-k="aboutK">About</span></span><p class="bio" data-k="bio" data-ml>Cinematographer and editor working across brand films, music and live events. I shoot for feeling first: natural light, real moments, frames that hold up on a cinema screen and a phone screen alike.</p></div>
-      <div class="blk"><span class="k">( 2 ) <span data-k="servK">Services</span></span><div data-k="serv" data-ml>Director of photography<br>Brand and commercial films<br>Music and live events<br>Edit and colour grade</div></div>
-      <div class="blk"><span class="k">( 3 ) <span data-k="contK">Contact</span></span><div data-k="cont" data-ml>hello@milofilmss.com<br>@milofilmss<br>Available Australia wide and remote</div></div>
+    </div>
+    <div class="yang">
+      <p class="sh"><span class="blkw ac"><i class="cq a"></i><i class="cq b"></i><span data-k="name">milofilmss</span></span><br><span data-k="role3">brisbane</span><svg class="arr" viewBox="0 0 62 50" aria-hidden="true"><path d="M0 18h30L20 0h14l28 25-28 25H20l10-18H0z" fill="currentColor"/></svg></p>
+      <div class="cols">
+        <div class="blk"><span class="k">( 2 ) <span data-k="servK">Services</span></span><ul data-k="serv" data-ml><li>Director of photography</li><li>Brand and commercial films</li><li>Music and live events</li><li>Edit and colour grade</li></ul></div>
+        <div class="blk"><span class="k">( 3 ) <span data-k="contK">Contact</span></span><div data-k="cont" data-ml>milohigney02@gmail.com<br>@milofilmss<br>Australia wide and remote</div></div>
+        <div class="shot" id="shot"><span data-k="shot">( headshot )</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -400,9 +420,14 @@ function layout(){
     const v=el.querySelector('video');if(v){a<.5?v.play().catch(()=>{}):v.pause();}
   });
 }
-function frame(){const g=geo[Math.min(geo.length-1,Math.max(0,Math.round(cur)))];if(!g)return;if(!F||reduce)F={...g};
-  const k=.42;let moving=false;for(const p of ['w','h','y']){const d=g[p]-F[p];if(Math.abs(d)>.15){F[p]+=d*k;moving=true;}else F[p]=g[p];}
-  const fr=$('#frame');fr.style.width=(F.w+18)+'px';fr.style.height=(F.h+18)+'px';fr.style.transform=`translate(-50%,-50%) translateY(${F.y}px)`;return moving;}
+let fIdx=-1,F0=null,fT=0;
+function frame(){const n=Math.min(geo.length-1,Math.max(0,Math.round(cur))),g=geo[n];if(!g)return;
+  if(!F||reduce){F={...g};fIdx=n;}
+  if(n!==fIdx){fIdx=n;F0={...F};fT=performance.now();}
+  const b=F0?Math.min(1,(performance.now()-fT)/200):1,e=1-(1-b)**3;
+  if(b>=1)F0=null;
+  for(const p of ['w','h','y'])F[p]=F0?F0[p]+(g[p]-F0[p])*e:g[p];
+  const fr=$('#frame');fr.style.width=(F.w+18)+'px';fr.style.height=(F.h+18)+'px';fr.style.transform=`translate(-50%,-50%) translateY(${F.y}px)`;}
 function loop(){const d=tgt-cur;if(Math.abs(d)>.0008){cur+=reduce?d:d*.13;layout();}else if(cur!==tgt){cur=tgt;layout();}frame();requestAnimationFrame(loop);}
 function texts(){const i=Math.round(tgt),p=S.projects[i];if(!p)return;const n=S.projects.length;
   $('#cnt').textContent=String(i+1).padStart(2,'0')+'/'+String(n).padStart(2,'0');
@@ -452,6 +477,7 @@ function route(){if(location.hash==='#edit'){openGate();history.replaceState(nul
   $$('.nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===B.dataset.view));
   document.title='milofilmss · '+B.dataset.view[0].toUpperCase()+B.dataset.view.slice(1);layout();}
 addEventListener('hashchange',route);
+{const sw=$('#studio .wrap');sw.addEventListener('scroll',()=>B.classList.toggle('st-low',sw.scrollTop>$('.yin').offsetHeight-70),{passive:true});}
 
 /* clock */
 function tick(){const now=new Date();const o={timeZone:'Australia/Brisbane'};
