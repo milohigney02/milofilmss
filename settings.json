@@ -20,6 +20,47 @@
   },
   "projects": [
     {
+      "t": "BGBOI",
+      "y": "2025",
+      "r": "Music video, DoP & edit",
+      "c": "BGBOI",
+      "s": "night",
+      "p": [
+        "#0b0b0b",
+        "#222",
+        "#888"
+      ],
+      "video": "media/01.mp4",
+      "img": "media/01.jpg",
+      "full": "media/01-full.mp4"
+    },
+    {
+      "t": "Esdeekid live",
+      "y": "2025",
+      "r": "Live stills",
+      "c": "Esdeekid",
+      "s": "night",
+      "p": [
+        "#0b0b0b",
+        "#222",
+        "#888"
+      ],
+      "img": "media/02.jpg"
+    },
+    {
+      "t": "Night shift",
+      "y": "2025",
+      "r": "Event stills",
+      "c": "Self initiated",
+      "s": "night",
+      "p": [
+        "#0b0b0b",
+        "#222",
+        "#888"
+      ],
+      "img": "media/03.jpg"
+    },
+    {
       "t": "Cyber.rave at The Triffid",
       "y": "2026",
       "r": "Multicam DoP & edit",
@@ -65,42 +106,6 @@
         "#3a3f44",
         "#9aa3a8",
         "#e9e2d3"
-      ]
-    },
-    {
-      "t": "Training block",
-      "y": "2026",
-      "r": "Brand film",
-      "c": "Sample brand",
-      "s": "room",
-      "p": [
-        "#191919",
-        "#5b5b5b",
-        "#d9d4c7"
-      ]
-    },
-    {
-      "t": "After hours",
-      "y": "2025",
-      "r": "Music video",
-      "c": "Sample artist",
-      "s": "night",
-      "p": [
-        "#06121c",
-        "#0d3a52",
-        "#7fd1ff"
-      ]
-    },
-    {
-      "t": "Salt & signal",
-      "y": "2025",
-      "r": "Commercial",
-      "c": "Sample brand",
-      "s": "land",
-      "p": [
-        "#b9c7cc",
-        "#6c858e",
-        "#1f2b30"
       ]
     },
     {

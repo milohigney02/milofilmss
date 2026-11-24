@@ -268,6 +268,7 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
     <label style="display:block">Full film link <input type="text" id="pu" placeholder="https://vimeo.com/..."></label>
     <label style="display:block">Preview clip file <input type="text" id="pv" placeholder="media/01.mp4"></label>
     <label style="display:block">Poster image file <input type="text" id="pp" placeholder="media/01.jpg"></label>
+    <label style="display:block">Full clip file (opens on click) <input type="text" id="pfull" placeholder="media/01-full.mp4"></label>
     <div class="btns" style="margin-top:8px">
       <label class="fb">Media…<input type="file" id="pf" accept="image/*,video/*" hidden></label>
       <button id="pup">Move up</button><button id="pdn">Move down</button>
@@ -410,7 +411,7 @@ function loop(){const d=tgt-cur;if(Math.abs(d)>.0008){cur+=reduce?d:d*.13;layout
 function texts(){const i=Math.round(tgt),p=S.projects[i];if(!p)return;const n=S.projects.length;
   $('#cnt').textContent=String(i+1).padStart(2,'0')+'/'+String(n).padStart(2,'0');
   $('#pt').textContent=(p.t||'').replace(/\s+/g,' ').trim();$('#py').textContent=p.y;$('#pr').textContent=p.r;
-  $('#pc').value=p.c||'';$('#pu').value=p.url||'';$('#pv').value=p.video||'';$('#pp').value=p.img&&!p.img.startsWith('data:')?p.img:'';}
+  $('#pc').value=p.c||'';$('#pu').value=p.url||'';$('#pv').value=p.video||'';$('#pfull').value=p.full||'';$('#pp').value=p.img&&!p.img.startsWith('data:')?p.img:'';}
 let fadeT;
 function go(i){i=Math.max(0,Math.min(S.projects.length-1,i));if(i===tgt)return;tgt=i;S.cur=i;save();
   if(document.activeElement&&document.activeElement.isContentEditable)document.activeElement.blur();
@@ -435,7 +436,7 @@ addEventListener('resize',layout);
 
 /* overlay */
 function openOv(i){const p=S.projects[i],m=$('#ovm');m.innerHTML='';m.style.backgroundImage='';
-  if(vids[i]||p.video){const v=document.createElement('video');v.src=vids[i]||p.video;v.controls=true;v.autoplay=true;v.playsInline=true;m.append(v);}else m.style.backgroundImage=`url(${still(p,i)})`;
+  if(vids[i]||p.full||p.video){const v=document.createElement('video');v.src=vids[i]||p.full||p.video;v.controls=true;v.onerror=()=>{if(p.video&&!v.src.endsWith(p.video))v.src=p.video;};v.autoplay=true;v.playsInline=true;m.append(v);}else m.style.backgroundImage=`url(${still(p,i)})`;
   $('#ovt').textContent=`${p.t} · ${p.c||''}, ${p.y}`;const l=$('#ovl');l.style.display=p.url?'':'none';l.href=p.url||'#';
   $('#ov').classList.add('on');$('#ovx').focus();}
 function closeOv(){$('#ov').classList.remove('on');$('#ovm').innerHTML='';}
@@ -487,6 +488,7 @@ $$('[data-el]').forEach(c=>c.onchange=()=>{S.els[c.dataset.el]=c.checked;apply()
 $('#pc').oninput=e=>{S.projects[Math.round(tgt)].c=e.target.value;rows();save();};
 $('#pu').oninput=e=>{S.projects[Math.round(tgt)].url=e.target.value.trim();save();};
 let pvT;$('#pv').oninput=e=>{S.projects[Math.round(tgt)].video=e.target.value.trim();save();clearTimeout(pvT);pvT=setTimeout(build,600);};
+$('#pfull').oninput=e=>{const v=e.target.value.trim();S.projects[Math.round(tgt)].full=v||undefined;save();};
 let ppT;$('#pp').oninput=e=>{const v=e.target.value.trim();S.projects[Math.round(tgt)].img=v||undefined;save();clearTimeout(ppT);ppT=setTimeout(build,600);};
 $('#pf').onchange=e=>{const f=e.target.files[0];if(!f)return;const i=Math.round(tgt);
   if(f.type.startsWith('video')){vids[i]=URL.createObjectURL(f);build();$('#msg').textContent='Video loaded for this session only.';}
