@@ -202,7 +202,7 @@ body[data-view=studio]:not(.st-low) .logo{background:#fff}
 <a href="#work" class="logo" aria-label="milofilmss, back to work"></a>
 <div class="chrome tr"><span class="dots"><a href="mailto:hello@milofilmss.com" id="mail" data-k="email">hello@milofilmss.com</a><i></i><i></i><i></i><i></i></span></div>
 <div class="chrome bl"><span class="dots"><span data-k="credit">Crafted by milofilmss</span><i></i><i></i><i></i><i></i></span></div>
-<div class="chrome br"><button class="editbtn" id="snd" aria-pressed="false">Sound off</button><a href="https://www.instagram.com/milofilmss/" data-k="ig">Instagram</a><a href="#" data-k="vimeo">Vimeo</a><button class="editbtn" id="editbtn" aria-pressed="false">Edit</button></div>
+<div class="chrome br"><button class="editbtn on" id="snd" aria-pressed="true">Sound on</button><a href="https://www.instagram.com/milofilmss/" data-k="ig">Instagram</a><a href="#" data-k="vimeo">Vimeo</a><button class="editbtn" id="editbtn" aria-pressed="false">Edit</button></div>
 <div class="meta l"><span data-k="loc">Brisbane, AU</span> &nbsp;<span id="clock">--:--</span></div>
 <div class="meta r"><span data-k="handle">@milofilmss</span> &nbsp;<span id="date"></span></div>
 <i class="cross c1"></i><i class="cross c2"></i><i class="cross c3"></i><i class="cross c4"></i>
@@ -397,7 +397,7 @@ function applyText(){$$('[data-k]').forEach(el=>{if(!el.dataset.def)el.dataset.d
   const m=$('#mail');m.href='mailto:'+m.textContent.trim();}
 
 /* dial */
-let sound=false,ovOpen=false;
+let sound=true,audioOK=false,ovOpen=false;
 const dial=$('#dial');let cur=S.cur||0,tgt=cur,W=0,H=0,items=[],geo=[],F=null;
 function build(){
   S.projects.forEach((p,i)=>{if(!p.p)p.p=['#999','#666','#333'];if(!p.s)p.s='land';});
@@ -428,7 +428,7 @@ function layout(){
     el.style.zIndex=100-Math.round(a*10);
     el.classList.toggle('act',a<.5);
     el.querySelector('.n').style.opacity=a<.6?0:1;
-    const v=el.querySelector('video');if(v){const on=a<.5&&!ovOpen;v.muted=!(on&&sound);on?v.play().catch(()=>{}):v.pause();}
+    const v=el.querySelector('video');if(v){const on=a<.5&&!ovOpen;v.muted=!(on&&sound&&audioOK);on?v.play().catch(()=>{}):v.pause();}
   });
 }
 let fIdx=-1,F0=null,fT=0;
@@ -472,7 +472,13 @@ function openOv(i){ovOpen=true;layout();const p=S.projects[i],m=$('#ovm');m.inne
   $('#ovt').textContent=`${p.t} · ${p.c||''}, ${p.y}`;const l=$('#ovl');l.style.display=p.url?'':'none';l.href=p.url||'#';
   $('#ov').classList.add('on');$('#ovx').focus();}
 function closeOv(){$('#ov').classList.remove('on');$('#ovm').innerHTML='';ovOpen=false;layout();}
-$('#snd').onclick=()=>{sound=!sound;$('#snd').textContent=sound?'Sound on':'Sound off';$('#snd').classList.toggle('on',sound);$('#snd').setAttribute('aria-pressed',sound);layout();};
+/* sound on by default: try unmuted autoplay, else unmute on first interaction */
+function tryAudio(){const v=document.querySelector('.it.act video');if(!v||!sound)return;v.muted=false;v.play().then(()=>{audioOK=true;}).catch(()=>{v.muted=true;v.play().catch(()=>{});});}
+setTimeout(tryAudio,400);
+let skipToggle=false;
+const unlockAudio=e=>{if(audioOK)return;audioOK=true;if(e&&e.target.closest&&e.target.closest('#snd'))skipToggle=true;layout();['pointerdown','keydown','touchend'].forEach(t=>removeEventListener(t,unlockAudio,true));};
+['pointerdown','keydown','touchend'].forEach(t=>addEventListener(t,unlockAudio,true));
+$('#snd').onclick=()=>{if(skipToggle){skipToggle=false;return;}sound=!sound;$('#snd').textContent=sound?'Sound on':'Sound off';$('#snd').classList.toggle('on',sound);$('#snd').setAttribute('aria-pressed',sound);layout();};
 $('#ovx').onclick=closeOv;$('#ov').addEventListener('click',e=>{if(e.target.id==='ov')closeOv();});
 
 /* index */
