@@ -94,6 +94,9 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .wb b:nth-child(5){left:100%;top:100%}.wb b:nth-child(6){left:50%;top:100%}.wb b:nth-child(7){left:0;top:100%}.wb b:nth-child(8){left:0;top:50%}
 .wb svg{position:absolute;left:calc(100% + 2px);top:calc(100% + 2px);width:20px;height:24px}
 .no-wire .wb{display:none}
+.no-wire .wire{padding:0}
+.side .wire{padding:6px 10px}
+.side .wire{vertical-align:top}
 /* index view */
 #index .wrap{position:absolute;inset:96px max(5vw,16px) 64px;overflow:auto;z-index:10}
 .ih{font:500 clamp(36px,6vw,84px)/.95 var(--disp);letter-spacing:-.045em;text-transform:lowercase;margin:0 0 28px}
@@ -123,7 +126,6 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .editing [data-k]:focus,.editing [data-p]:focus{outline:1px solid var(--accent)}
 .rzh{display:none;position:absolute;width:12px;height:12px;background:var(--bg);border:1.5px solid var(--accent);right:-6px;bottom:-6px;cursor:nwse-resize;pointer-events:auto;z-index:30}
 .editing .rzh{display:block}
-.editing .frame{outline:1px solid var(--accent)}
 #panel{position:fixed;top:72px;right:16px;width:290px;max-height:calc(100vh - 140px);overflow:auto;z-index:90;background:var(--panel);border:1px solid color-mix(in srgb,var(--ink) 20%,transparent);display:none;font:12px/1.4 "Geist Mono",monospace;text-transform:none;letter-spacing:0;box-shadow:0 12px 40px rgba(0,0,0,.12)}
 .editing #panel{display:block}
 #panel header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid color-mix(in srgb,var(--ink) 15%,transparent);cursor:move;position:sticky;top:0;background:var(--panel);z-index:2}
@@ -136,7 +138,11 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .sw{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .sw button{width:34px;height:34px;border:1px solid color-mix(in srgb,var(--ink) 25%,transparent);cursor:pointer;padding:0}
 .sw button.on{outline:2px solid var(--ink);outline-offset:2px}
-.sw input[type=color]{width:34px;height:34px;border:0;padding:0;background:none;cursor:pointer}
+.wheel{position:relative;width:200px;height:200px;margin:2px auto 12px;touch-action:none;cursor:crosshair;border-radius:50%}
+.wheel canvas{width:100%;height:100%;display:block;border-radius:50%}
+#whdot{position:absolute;width:16px;height:16px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);transform:translate(-50%,-50%);pointer-events:none}
+#hex{width:92px!important;font-family:"Geist Mono",monospace}
+.sw button{width:28px!important;height:28px!important}
 .seg{display:flex;border:1px solid color-mix(in srgb,var(--ink) 25%,transparent)}
 .seg button{flex:1;border:0;background:none;padding:8px;cursor:pointer}
 .seg button.on{background:var(--ink);color:var(--bg)}
@@ -185,7 +191,7 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
   <div id="dial"></div>
   <div class="frame" id="frame"><i></i><i></i><i></i><i></i><span class="rzh" data-rz="mw"></span></div>
   <div class="side l" id="sl"><span class="k" id="cnt">01/12</span><span class="v"><span class="sel"><span class="ca a"></span><span data-p="t" id="pt"></span><span class="ca b"></span></span></span></div>
-  <div class="side r" id="sr"><span class="k" data-p="y" id="py"></span><span class="v" data-p="r" id="pr"></span><span class="rzh" data-rz="side"></span></div>
+  <div class="side r" id="sr"><span class="wire"><span class="k" data-p="y" id="py"></span><span class="v" data-p="r" id="pr"></span><span class="wb"></span></span><span class="rzh" data-rz="side"></span></div>
 </main>
 
 <section id="index" class="view" aria-label="Index">
@@ -199,7 +205,7 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 <section id="studio" class="view" aria-label="Studio">
   <div class="wrap">
     <div>
-      <h1 class="hs"><span class="wire"><span data-k="name">milofilmss</span><span class="wb"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><svg viewBox="0 0 20 24"><path d="M1 1l17 12-7.5 1.4L15 22l-3 1.4-4.2-7.6L1 20z" fill="#000" stroke="#fff" stroke-width="1.2"/></svg><span class="rzh" data-rz="hs"></span></span></span></h1>
+      <h1 class="hs"><span class="wire"><span data-k="name">milofilmss</span><span class="wb"></span><span class="rzh" data-rz="hs"></span></span></h1>
       <p class="sub"><span data-k="role1">director of</span> <span class="rev" data-k="role2">photography</span></p>
       <p class="sub"><em data-k="role3">brisbane, australia</em></p>
       <div class="shot" id="shot"><span data-k="shot">( headshot )</span></div>
@@ -224,11 +230,13 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 <aside id="panel" aria-label="Edit panel">
   <header id="ph"><span>Edit mode</span><span><button class="editbtn" id="plock" style="text-transform:none;margin-right:12px">Lock</button><button class="editbtn" id="pclose" style="text-transform:none">Done</button></span></header>
   <section><h4>Accent</h4>
+    <div class="wheel" id="wheel"><canvas id="wh" width="400" height="400" aria-label="Colour wheel"></canvas><i id="whdot"></i></div>
+    <label>Brightness <input type="range" id="r-val" min=".05" max="1" step=".01"></label>
     <div class="sw" id="sw">
       <button data-c="#0A1FB4" style="background:#0A1FB4" aria-label="Vivid blue"></button>
       <button data-c="#FF2B1C" style="background:#FF2B1C" aria-label="Signal red"></button>
       <button data-c="#FFD200" style="background:#FFD200" aria-label="Yellow"></button>
-      <input type="color" id="cpick" value="#0A1FB4" aria-label="Custom accent">
+      <input type="text" id="hex" aria-label="Hex colour" maxlength="7" spellcheck="false">
     </div>
   </section>
   <section><h4>Typography</h4>
@@ -325,12 +333,26 @@ function still(p,i){
   return posters[k]=c.toDataURL('image/jpeg',.82);
 }
 
+/* colour wheel */
+function hsv2rgb(h,s,v){const f=n=>{const k=(n+h/60)%6;return v-v*s*Math.max(0,Math.min(k,4-k,1));};return[f(5),f(3),f(1)].map(x=>Math.round(x*255));}
+function hsv2hex(h,s,v){return'#'+hsv2rgb(h,s,v).map(x=>x.toString(16).padStart(2,'0')).join('');}
+function hex2hsv(hex){const n=parseInt(hex.slice(1),16),r=(n>>16&255)/255,g=(n>>8&255)/255,b=(n&255)/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;
+  let h=0;if(d){h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;h=(h*60+360)%360;}return[h,mx?d/mx:0,mx];}
+let WV=1,drawnV=-1;
+function drawWheel(v){if(Math.abs(v-drawnV)<.005)return;drawnV=v;const c=$('#wh'),x=c.getContext('2d'),N=c.width,R=N/2,img=x.createImageData(N,N),D=img.data;
+  for(let j=0;j<N;j++)for(let i=0;i<N;i++){const dx=i-R+.5,dy=j-R+.5,d=Math.hypot(dx,dy)/R,q=(j*N+i)*4;if(d>1){D[q+3]=0;continue;}
+    const [r,g,b]=hsv2rgb((Math.atan2(dy,dx)*180/Math.PI+360)%360,d,v);D[q]=r;D[q+1]=g;D[q+2]=b;D[q+3]=d>.985?Math.round((1-d)/.015*255):255;}
+  x.putImageData(img,0,0);}
+function syncWheel(){const [h,sat,v]=hex2hsv(S.accent);WV=Math.max(.05,v);$('#r-val').value=WV;drawWheel(WV);
+  const a=h*Math.PI/180,dot=$('#whdot');dot.style.left=(50+Math.cos(a)*sat*50)+'%';dot.style.top=(50+Math.sin(a)*sat*50)+'%';dot.style.background=S.accent;}
+/* wireframe boxes */
+document.querySelectorAll('.wb').forEach(w=>{w.innerHTML='<b></b>'.repeat(8)+'<svg viewBox="0 0 20 24" aria-hidden="true"><path d="M1 1l17 12-7.5 1.4L15 22l-3 1.4-4.2-7.6L1 20z" fill="#000" stroke="#fff" stroke-width="1.2"/></svg>';});
 /* apply settings */
 function apply(){
   R.style.setProperty('--accent',S.accent);R.style.setProperty('--grain',S.grain);R.style.setProperty('--side',S.side+'px');R.style.setProperty('--hs',S.hs+'px');
   B.dataset.type=S.type;
   for(const k in S.els)B.classList.toggle('no-'+k,!S.els[k]);
-  $$('#sw button').forEach(b=>b.classList.toggle('on',b.dataset.c.toLowerCase()===S.accent.toLowerCase()));$('#cpick').value=S.accent;
+  $$('#sw button').forEach(b=>b.classList.toggle('on',b.dataset.c.toLowerCase()===S.accent.toLowerCase()));if(document.activeElement!==$('#hex'))$('#hex').value=S.accent.toUpperCase();syncWheel();
   $$('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.t===S.type));
   ['grain','mw','tw','blur','side','hs'].forEach(k=>$('#r-'+k).value=S[k]);
   $$('[data-el]').forEach(c=>c.checked=!!S.els[c.dataset.el]);
@@ -441,7 +463,11 @@ document.addEventListener('input',e=>{const el=e.target;
 document.addEventListener('click',e=>{if(B.classList.contains('editing')&&e.target.closest('a[data-k]'))e.preventDefault();},true);
 document.addEventListener('paste',e=>{if(e.target.isContentEditable){e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'));}});
 $$('#sw button').forEach(b=>b.onclick=()=>{S.accent=b.dataset.c;apply();save();});
-$('#cpick').oninput=e=>{S.accent=e.target.value;apply();save();};
+$('#hex').oninput=e=>{let v=e.target.value.trim();if(!v.startsWith('#'))v='#'+v;if(/^#[0-9a-f]{6}$/i.test(v)){S.accent=v;apply();save();}};
+$('#r-val').oninput=e=>{const [h,sv]=hex2hsv(S.accent);S.accent=hsv2hex(h,sv,+e.target.value);WV=+e.target.value;apply();save();};
+{const wl=$('#wheel');const pick=e=>{const r=wl.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2,R=r.width/2;
+  const sat=Math.min(1,Math.hypot(x,y)/R),h=(Math.atan2(y,x)*180/Math.PI+360)%360;S.accent=hsv2hex(h,sat,WV);apply();save();};
+ wl.addEventListener('pointerdown',e=>{e.preventDefault();wl.setPointerCapture(e.pointerId);pick(e);const mv=ev=>pick(ev),up=()=>{wl.removeEventListener('pointermove',mv);wl.removeEventListener('pointerup',up);};wl.addEventListener('pointermove',mv);wl.addEventListener('pointerup',up);});}
 $$('#tseg button').forEach(b=>b.onclick=()=>{S.type=b.dataset.t;apply();save();});
 ['grain','mw','tw','blur','side','hs'].forEach(k=>$('#r-'+k).oninput=e=>{S[k]=+e.target.value;apply();save();});
 $$('[data-el]').forEach(c=>c.onchange=()=>{S.els[c.dataset.el]=c.checked;apply();save();});
