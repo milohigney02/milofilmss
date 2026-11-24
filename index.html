@@ -136,7 +136,7 @@ body[data-view=studio]:not(.st-low) .logo{background:#fff}
 #ov{position:fixed;inset:0;z-index:80;background:color-mix(in srgb,var(--bg) 94%,transparent);display:none;place-items:center}
 #ov.on{display:grid}
 #ov .media{width:min(88vw,(100vh - 160px)*16/9);aspect-ratio:16/9;background:#777 center/cover;position:relative}
-#ov .media video{width:100%;height:100%;object-fit:cover}
+#ov .media video{width:100%;height:100%;object-fit:contain;background:#000}
 #ov .bar{display:flex;justify-content:space-between;gap:16px;width:min(88vw,(100vh - 160px)*16/9);margin-top:12px}
 #ov .x{position:fixed;top:16px;right:16px;background:none;border:0;cursor:pointer;padding:6px;text-transform:var(--tt)}
 #ov a.go{text-decoration:underline;text-underline-offset:3px}
@@ -202,7 +202,7 @@ body[data-view=studio]:not(.st-low) .logo{background:#fff}
 <a href="#work" class="logo" aria-label="milofilmss, back to work"></a>
 <div class="chrome tr"><span class="dots"><a href="mailto:hello@milofilmss.com" id="mail" data-k="email">hello@milofilmss.com</a><i></i><i></i><i></i><i></i></span></div>
 <div class="chrome bl"><span class="dots"><span data-k="credit">Crafted by milofilmss</span><i></i><i></i><i></i><i></i></span></div>
-<div class="chrome br"><a href="https://www.instagram.com/milofilmss/" data-k="ig">Instagram</a><a href="#" data-k="vimeo">Vimeo</a><button class="editbtn" id="editbtn" aria-pressed="false">Edit</button></div>
+<div class="chrome br"><button class="editbtn" id="snd" aria-pressed="false">Sound off</button><a href="https://www.instagram.com/milofilmss/" data-k="ig">Instagram</a><a href="#" data-k="vimeo">Vimeo</a><button class="editbtn" id="editbtn" aria-pressed="false">Edit</button></div>
 <div class="meta l"><span data-k="loc">Brisbane, AU</span> &nbsp;<span id="clock">--:--</span></div>
 <div class="meta r"><span data-k="handle">@milofilmss</span> &nbsp;<span id="date"></span></div>
 <i class="cross c1"></i><i class="cross c2"></i><i class="cross c3"></i><i class="cross c4"></i>
@@ -392,6 +392,7 @@ function applyText(){$$('[data-k]').forEach(el=>{if(!el.dataset.def)el.dataset.d
   const m=$('#mail');m.href='mailto:'+m.textContent.trim();}
 
 /* dial */
+let sound=false,ovOpen=false;
 const dial=$('#dial');let cur=S.cur||0,tgt=cur,W=0,H=0,items=[],geo=[],F=null;
 function build(){
   S.projects.forEach((p,i)=>{if(!p.p)p.p=['#999','#666','#333'];if(!p.s)p.s='land';});
@@ -422,7 +423,7 @@ function layout(){
     el.style.zIndex=100-Math.round(a*10);
     el.classList.toggle('act',a<.5);
     el.querySelector('.n').style.opacity=a<.6?0:1;
-    const v=el.querySelector('video');if(v){a<.5?v.play().catch(()=>{}):v.pause();}
+    const v=el.querySelector('video');if(v){const on=a<.5&&!ovOpen;v.muted=!(on&&sound);on?v.play().catch(()=>{}):v.pause();}
   });
 }
 let fIdx=-1,F0=null,fT=0;
@@ -461,11 +462,12 @@ addEventListener('keydown',e=>{const ed=e.target.isContentEditable||/INPUT|TEXTA
 addEventListener('resize',layout);
 
 /* overlay */
-function openOv(i){const p=S.projects[i],m=$('#ovm');m.innerHTML='';m.style.backgroundImage='';
+function openOv(i){ovOpen=true;layout();const p=S.projects[i],m=$('#ovm');m.innerHTML='';m.style.backgroundImage='';
   if(vids[i]||p.full||p.video){const v=document.createElement('video');v.src=vids[i]||p.full||p.video;v.controls=true;v.onerror=()=>{if(p.video&&!v.src.endsWith(p.video))v.src=p.video;};v.autoplay=true;v.playsInline=true;m.append(v);}else m.style.backgroundImage=`url(${still(p,i)})`;
   $('#ovt').textContent=`${p.t} · ${p.c||''}, ${p.y}`;const l=$('#ovl');l.style.display=p.url?'':'none';l.href=p.url||'#';
   $('#ov').classList.add('on');$('#ovx').focus();}
-function closeOv(){$('#ov').classList.remove('on');$('#ovm').innerHTML='';}
+function closeOv(){$('#ov').classList.remove('on');$('#ovm').innerHTML='';ovOpen=false;layout();}
+$('#snd').onclick=()=>{sound=!sound;$('#snd').textContent=sound?'Sound on':'Sound off';$('#snd').classList.toggle('on',sound);$('#snd').setAttribute('aria-pressed',sound);layout();};
 $('#ovx').onclick=closeOv;$('#ov').addEventListener('click',e=>{if(e.target.id==='ov')closeOv();});
 
 /* index */

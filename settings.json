@@ -20,6 +20,21 @@
   },
   "projects": [
     {
+      "t": "Short 002",
+      "y": "2026",
+      "r": "Teaser, DoP",
+      "c": "Short 002",
+      "s": "night",
+      "p": [
+        "#0b0b0b",
+        "#222",
+        "#888"
+      ],
+      "video": "media/short002.mp4",
+      "img": "media/short002.jpg",
+      "full": "media/short002.mp4"
+    },
+    {
       "t": "BGBOI",
       "y": "2025",
       "r": "Music video, DoP & edit",
