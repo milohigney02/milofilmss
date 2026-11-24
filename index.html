@@ -77,8 +77,8 @@ body[data-type=b] .side .k{font-style:italic}
 body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .side.fade{opacity:0}
 /* iOS selection highlight */
-.hl{background:color-mix(in srgb,var(--accent) 17%,transparent);padding:.14em .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.ca{display:inline-block;position:relative;width:2px;height:1.32em;vertical-align:-.3em;background:var(--accent);border-radius:1px;margin:0 -1px}
+.hl{background:color-mix(in srgb,var(--accent) 9%,transparent);padding:.14em .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ca{display:inline-block;position:relative;opacity:.6;width:2px;height:1.32em;vertical-align:-.3em;background:var(--accent);border-radius:1px;margin:0 -1px}
 .ca::after{content:"";position:absolute;left:50%;width:8px;height:8px;border-radius:50%;background:var(--accent);transform:translateX(-50%)}
 .ca.a::after{top:-6px}.ca.b::after{bottom:-6px}
 .no-sel .hl{background:none;padding:0}.no-sel .ca{display:none}
@@ -87,7 +87,7 @@ body[data-type=b] .side .v{font-size:1.3em;font-weight:600;line-height:1.05}
 .no-swiss .rev{background:none;color:inherit;padding:0}
 /* wireframe selection box */
 .wire{position:relative;display:inline-block;padding:.06em .14em}
-.wire>.wb{position:absolute;inset:0;border:1px solid var(--accent);pointer-events:none}
+.wire>.wb{position:absolute;inset:0;border:1px solid var(--accent);pointer-events:none;opacity:.5}
 .wb b{position:absolute;width:9px;height:9px;background:var(--bg);border:1px solid var(--accent);transform:translate(-50%,-50%)}
 .wb b:nth-child(1){left:0;top:0}.wb b:nth-child(2){left:50%;top:0}.wb b:nth-child(3){left:100%;top:0}.wb b:nth-child(4){left:100%;top:50%}
 .wb b:nth-child(5){left:100%;top:100%}.wb b:nth-child(6){left:50%;top:100%}.wb b:nth-child(7){left:0;top:100%}.wb b:nth-child(8){left:0;top:50%}
@@ -345,7 +345,7 @@ function drawWheel(v){if(Math.abs(v-drawnV)<.005)return;drawnV=v;const c=$('#wh'
 function syncWheel(){const [h,sat,v]=hex2hsv(S.accent);WV=Math.max(.05,v);$('#r-val').value=WV;drawWheel(WV);
   const a=h*Math.PI/180,dot=$('#whdot');dot.style.left=(50+Math.cos(a)*sat*50)+'%';dot.style.top=(50+Math.sin(a)*sat*50)+'%';dot.style.background=S.accent;}
 /* wireframe boxes */
-document.querySelectorAll('.wb').forEach(w=>{w.innerHTML='<b></b>'.repeat(8)+'<svg viewBox="0 0 20 24" aria-hidden="true"><path d="M1 1l17 12-7.5 1.4L15 22l-3 1.4-4.2-7.6L1 20z" fill="#000" stroke="#fff" stroke-width="1.2"/></svg>';});
+document.querySelectorAll('.wb').forEach(w=>{w.innerHTML='<b></b>'.repeat(8);});
 /* apply settings */
 function apply(){
   R.style.setProperty('--accent',S.accent);R.style.setProperty('--grain',S.grain);R.style.setProperty('--side',S.side+'px');R.style.setProperty('--hs',S.hs+'px');
